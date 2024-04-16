@@ -1,7 +1,7 @@
 //! snps,dw-apb-uart serial driver
 
 use crate::mem::phys_to_virt;
-use dw_apb_uart::DW8250;
+use dw_apb_gpio::GPIO;
 use memory_addr::PhysAddr;
 use spinlock::SpinNoIrq;
 
