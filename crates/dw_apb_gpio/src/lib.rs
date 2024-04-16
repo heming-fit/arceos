@@ -35,18 +35,18 @@ impl GPIO {
     }
 }
 
-pub struct IO {
+pub struct Pin {
     gpio: GPIO,
 }
 
-impl IO {
+impl Pin {
     pub init {
         todo!("根据手册编写初始化流程")
     }
 
     /// 根据引脚号创建使用对象，例如使用portb的49就
     /// ```
-    /// let pin = IO::new('b', 49);
+    /// let pin = Pin::new('b', 49);
     /// ```
     pub fn new(part: char, index: usize) -> Self{}
 
