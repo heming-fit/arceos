@@ -34,3 +34,27 @@ impl GPIO {
         todo!("根据初始化流程编写寄存器")
     }
 }
+
+pub struct Pin {
+    gpio: GPIO,
+}
+
+impl Pin {
+    pub init {
+        todo!("根据手册编写初始化流程")
+    }
+
+    /// 根据引脚号创建使用对象，例如使用portb的49就
+    /// ```
+    /// let pin = Pin::new('b', 49);
+    /// ```
+    pub fn new(part: char, index: usize) -> Self{}
+
+    /// 设置电平，true为高
+    pub fn set_level(&self, value: bool) {
+        todo!("根据手册编写设置流程")
+    }
+
+    /// 设置输入输出模式，true为输出
+    pub fn set_io(&self, value: bool) {}
+}
