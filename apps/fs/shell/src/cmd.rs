@@ -71,10 +71,18 @@ const fn file_perm_to_rwx(mode: u32) -> [u8; 9] {
 fn do_test_blink(_args: &str) {
     println!("test blink");
     let pin = (pin(49), pin(50), pin(51), pin(52));
-    pin.0.set_level(true);
-    pin.1.set_level(false);
-    pin.2.set_level(true);
-    pin.3.set_level(false);
+    loop {
+        pin.0.set_level(false);
+        pin.1.set_level(true);
+        pin.2.set_level(false);
+        pin.3.set_level(true);
+        for _ in 0..1000000 {}
+        pin.0.set_level(true);
+        pin.1.set_level(false);
+        pin.2.set_level(true);
+        pin.3.set_level(false);
+        for _ in 0..1000000 {}
+    }
 }
 
 fn do_ls(args: &str) {
