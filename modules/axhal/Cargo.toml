@@ -53,7 +53,7 @@ tock-registers = "0.8"
 arm_gic = { path = "../../crates/arm_gic" }
 arm_pl011 = { path = "../../crates/arm_pl011" }
 dw_apb_uart = { path = "../../crates/dw_apb_uart" }
-dw_apb_gpio = { path = "../../crates/dw_apb_apio" }
+dw_apb_gpio = { path = "../../crates/dw_apb_gpio" }
 
 [build-dependencies]
 axconfig = { path = "../axconfig" }

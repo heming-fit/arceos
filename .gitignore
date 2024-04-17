@@ -6,3 +6,7 @@
 actual.out
 qemu.log
 rusty-tags.vi
+
+# 系统编译文件
+arceos-fada.bin.gz
+arceos-fada.itb
