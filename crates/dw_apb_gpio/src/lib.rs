@@ -139,7 +139,7 @@ impl GPIO {
     /// ```
     pub fn pin(&mut self, index: usize) -> Pin {
         let lock_base_address = match index < 111 {
-            true => 0x0038000,
+            true => 0xC0038000,
             false => 0x33001000,
         };
         // 似乎只能写成这样，宏无法作引脚引索到寄存器引索的映射
