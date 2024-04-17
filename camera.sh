@@ -1,0 +1,1 @@
+guvcview -d /dev/video0
