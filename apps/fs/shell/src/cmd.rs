@@ -1,6 +1,8 @@
 use std::fs::{self, File, FileType};
 use std::hal::pin;
 use std::io::{self, prelude::*};
+use std::thread;
+use std::time::{Duration, Instant};
 use std::{string::String, vec::Vec};
 
 #[cfg(all(not(feature = "axstd"), unix))]
@@ -73,15 +75,25 @@ fn do_test_blink(_args: &str) {
     let pin = (pin(49), pin(50), pin(51), pin(52));
     loop {
         pin.0.set_level(false);
-        pin.1.set_level(true);
+        pin.1.set_level(false);
         pin.2.set_level(false);
         pin.3.set_level(true);
-        for _ in 0..1000000 {}
-        pin.0.set_level(true);
+        thread::sleep(Duration::from_secs(1));
+        pin.0.set_level(false);
         pin.1.set_level(false);
         pin.2.set_level(true);
         pin.3.set_level(false);
-        for _ in 0..1000000 {}
+        thread::sleep(Duration::from_secs(1));
+        pin.0.set_level(false);
+        pin.1.set_level(true);
+        pin.2.set_level(false);
+        pin.3.set_level(false);
+        thread::sleep(Duration::from_secs(1));
+        pin.0.set_level(true);
+        pin.1.set_level(false);
+        pin.2.set_level(false);
+        pin.3.set_level(false);
+        thread::sleep(Duration::from_secs(1));
         println!("a loop");
     }
 }
