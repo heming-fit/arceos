@@ -82,6 +82,7 @@ fn do_test_blink(_args: &str) {
         pin.2.set_level(true);
         pin.3.set_level(false);
         for _ in 0..1000000 {}
+        println!("a loop");
     }
 }
 

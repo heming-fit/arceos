@@ -49,8 +49,9 @@ gicc-paddr = "0x32002000"
 gpio0-paddr = "0x20010000"
 # gpio1
 gpio1-paddr = "0x20011000"
+lock-paddr = "0x70038000"
 
-# BST A1000B board registers
+# BST A1000B board registers# gpio lock
 CPU_CSR_BASE = "0x32011000"
 A1000BASE_TOPCRM = "0x33002000"
 A1000BASE_SAFETYCRM = "0x70035000"
