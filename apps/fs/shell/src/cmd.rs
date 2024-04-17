@@ -1,4 +1,5 @@
 use std::fs::{self, File, FileType};
+use std::hal::pin;
 use std::io::{self, prelude::*};
 use std::{string::String, vec::Vec};
 
@@ -27,6 +28,7 @@ const CMD_TABLE: &[(&str, CmdHandler)] = &[
     ("pwd", do_pwd),
     ("rm", do_rm),
     ("uname", do_uname),
+    ("blink", do_test_blink),
 ];
 
 fn file_type_to_char(ty: FileType) -> char {
@@ -64,6 +66,15 @@ const fn file_perm_to_rwx(mode: u32) -> [u8; 9] {
     set!(5, b'r'); set!(4, b'w'); set!(3, b'x');
     set!(8, b'r'); set!(7, b'w'); set!(6, b'x');
     perm
+}
+
+fn do_test_blink(_args: &str) {
+    println!("test blink");
+    let pin = (pin(49), pin(50), pin(51), pin(52));
+    pin.0.set_level(true);
+    pin.1.set_level(false);
+    pin.2.set_level(true);
+    pin.3.set_level(false);
 }
 
 fn do_ls(args: &str) {
