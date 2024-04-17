@@ -1,3 +1,4 @@
+pub mod dw_apb_gpio;
 mod dw_apb_uart;
 
 pub mod mem;
@@ -13,6 +14,10 @@ pub mod irq {
 
 pub mod console {
     pub use super::dw_apb_uart::*;
+}
+
+pub mod hal {
+    pub use super::dw_apb_gpio::*;
 }
 
 pub mod time {

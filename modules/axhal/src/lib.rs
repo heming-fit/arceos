@@ -63,6 +63,10 @@ pub mod console {
     }
 }
 
+pub mod hal {
+    pub use super::platform::hal::*;
+}
+
 /// Miscellaneous operation, e.g. terminate the system.
 pub mod misc {
     pub use super::platform::misc::*;

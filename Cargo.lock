@@ -188,6 +188,7 @@ dependencies = [
  "axnet",
  "axruntime",
  "axtask",
+ "dw_apb_gpio",
 ]
 
 [[package]]
@@ -472,6 +473,7 @@ dependencies = [
  "axerrno",
  "axfeat",
  "axio",
+ "dw_apb_gpio",
  "spinlock",
 ]
 

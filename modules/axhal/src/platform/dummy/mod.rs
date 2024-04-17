@@ -13,6 +13,13 @@ pub mod console {
     }
 }
 
+pub mod hal {
+    pub use super::dw_apb_gpio;
+    pub fn pin(index: usize) -> Pin {
+        unimplemented!()
+    }
+}
+
 pub mod misc {
     /// Shutdown the whole system, including all CPUs.
     pub fn terminate() -> ! {

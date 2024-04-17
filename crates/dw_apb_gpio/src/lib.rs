@@ -184,6 +184,12 @@ pub struct Pin {
     index: usize,
 }
 
+impl From<u8> for Pin {
+    fn from(_value: u8) -> Self {
+        panic!("错误的平台调用导致以dummy方式执行")
+    }
+}
+
 impl Pin {
     const fn regs(&self) -> &GPIORegs {
         unsafe { &*(self.base_vaddr as *const _) }
