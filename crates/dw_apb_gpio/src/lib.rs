@@ -120,15 +120,19 @@ register_bitfields! [
 /// dw-apb-uart serial driver: DW8250
 pub struct GPIO {
     base_vaddr: usize,
+    lock_base_address: usize,
 }
 
 impl GPIO {
     /// New a GPIO
-    pub const fn new(base_vaddr: usize) -> Self {
-        Self { base_vaddr }
+    pub const fn new(base_vaddr: usize, lock_base_address: usize) -> Self {
+        Self {
+            base_vaddr,
+            lock_base_address,
+        }
     }
 
-    const fn unlock_regs(&self, lock_base_address: u32) -> &LOCKRegs {
+    const fn unlock_regs(&self, lock_base_address: usize) -> &LOCKRegs {
         unsafe { &*(lock_base_address as *const _) }
     }
 
@@ -138,10 +142,7 @@ impl GPIO {
     /// let pin = GPIO0.pin(49);
     /// ```
     pub fn pin(&mut self, index: usize) -> Pin {
-        let lock_base_address = match index < 111 {
-            true => 0xC0038000,
-            false => 0x33001000,
-        };
+        let lock_base_address = self.lock_base_address;
         // 似乎只能写成这样，宏无法作引脚引索到寄存器引索的映射
         match index {
             49 => {
