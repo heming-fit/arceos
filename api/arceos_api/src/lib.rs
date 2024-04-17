@@ -78,6 +78,13 @@ pub mod stdio {
     }
 }
 
+pub mod hal {
+    use dw_apb_gpio;
+    define_api! {
+        pub fn pin(index: usize) -> dw_apb_gpio::Pin;
+    }
+}
+
 /// Multi-threading management.
 pub mod task {
     define_api_type! {

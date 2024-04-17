@@ -33,6 +33,14 @@ mod stdio {
     }
 }
 
+mod hal {
+    use dw_apb_gpio;
+    pub fn pin(index: usize) -> dw_apb_gpio::Pin {
+        axhal::hal::pin(index)
+    }
+}
+
+pub use self::hal::*;
 pub use self::mem::*;
 pub use self::stdio::*;
 pub use self::task::*;
