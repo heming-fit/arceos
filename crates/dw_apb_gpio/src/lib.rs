@@ -3,7 +3,9 @@
 #![no_std]
 
 use tock_registers::{
-    interfaces::ReadWriteable, register_bitfields, register_structs, registers::ReadWrite,
+    interfaces::{ReadWriteable, Readable},
+    register_bitfields, register_structs,
+    registers::ReadWrite,
 };
 
 register_structs! {
@@ -119,8 +121,8 @@ register_bitfields! [
 
 /// dw-apb-uart serial driver: DW8250
 pub struct GPIO {
-    base_vaddr: usize,
-    lock_base_address: usize,
+    pub base_vaddr: usize,
+    pub lock_base_address: usize,
 }
 
 impl GPIO {
@@ -134,6 +136,23 @@ impl GPIO {
 
     const fn unlock_regs(&self, lock_base_address: usize) -> &LOCKRegs {
         unsafe { &*(lock_base_address as *const _) }
+    }
+
+    pub fn state(&self) -> (u32, u32, u32, u32) {
+        (
+            self.unlock_regs(self.lock_base_address)
+                .aon_pmm_reg_0
+                .read(aon_0::GPIO49),
+            self.unlock_regs(self.lock_base_address)
+                .aon_pmm_reg_0
+                .read(aon_0::GPIO50),
+            self.unlock_regs(self.lock_base_address)
+                .aon_pmm_reg_4
+                .read(aon_4::GPIO51),
+            self.unlock_regs(self.lock_base_address)
+                .aon_pmm_reg_4
+                .read(aon_4::GPIO52),
+        )
     }
 
     /// 根据引脚号创建使用对象，例如使用portb的49就
@@ -172,7 +191,6 @@ impl GPIO {
             index,
         }
     }
-
     /// gpio initialize
     pub fn init(&mut self) {
         todo!("根据初始化流程编写寄存器")
@@ -259,6 +277,32 @@ impl Pin {
                 self.regs().gpio_swportb_ctl.modify(ctl::GPIO52::SOFT);
             }
             index => panic!("引脚{index}功能未实现"),
+        }
+    }
+
+    pub fn state(&self) -> (u32, u32, u32) {
+        match self.index {
+            49 => (
+                self.regs().gpio_swportb_ctl.read(ctl::GPIO49),
+                self.regs().gpio_swportb_ddr.read(ddr::GPIO49),
+                self.regs().gpio_swportb_dr.read(dr::GPIO49),
+            ),
+            50 => (
+                self.regs().gpio_swportb_ctl.read(ctl::GPIO50),
+                self.regs().gpio_swportb_ddr.read(ddr::GPIO50),
+                self.regs().gpio_swportb_dr.read(dr::GPIO50),
+            ),
+            51 => (
+                self.regs().gpio_swportb_ctl.read(ctl::GPIO51),
+                self.regs().gpio_swportb_ddr.read(ddr::GPIO51),
+                self.regs().gpio_swportb_dr.read(dr::GPIO51),
+            ),
+            52 => (
+                self.regs().gpio_swportb_ctl.read(ctl::GPIO52),
+                self.regs().gpio_swportb_ddr.read(ddr::GPIO52),
+                self.regs().gpio_swportb_dr.read(dr::GPIO52),
+            ),
+            _ => panic!("引脚{}功能未实现", self.index),
         }
     }
 }

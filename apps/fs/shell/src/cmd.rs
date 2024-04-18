@@ -1,9 +1,9 @@
-use dw_apb_gpio::GPIO;
+use dw_apb_gpio::{Pin, GPIO};
 use std::fs::{self, File, FileType};
 use std::hal::GPIO0;
 use std::io::{self, prelude::*};
 use std::thread;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 use std::{string::String, vec::Vec};
 
 #[cfg(all(not(feature = "axstd"), unix))]
@@ -74,30 +74,56 @@ const fn file_perm_to_rwx(mode: u32) -> [u8; 9] {
 fn do_test_blink(_args: &str) {
     println!("test blink");
     let mut gpio0 = GPIO0.lock();
-    let pin = (gpio0.pin(49), gpio0.pin(50), gpio0.pin(51), gpio0.pin(52));
-    loop {
-        pin.0.set_level(false);
-        pin.1.set_level(false);
-        pin.2.set_level(false);
-        pin.3.set_level(true);
-        thread::sleep(Duration::from_secs(1));
-        pin.0.set_level(false);
-        pin.1.set_level(false);
-        pin.2.set_level(true);
-        pin.3.set_level(false);
-        thread::sleep(Duration::from_secs(1));
-        pin.0.set_level(false);
-        pin.1.set_level(true);
-        pin.2.set_level(false);
-        pin.3.set_level(false);
-        thread::sleep(Duration::from_secs(1));
-        pin.0.set_level(true);
-        pin.1.set_level(false);
-        pin.2.set_level(false);
-        pin.3.set_level(false);
-        thread::sleep(Duration::from_secs(1));
-        println!("a loop");
-    }
+    println!("lock reg value: {:?}", gpio0.state());
+    println!("lock_base_address: {:#x} ", gpio0.lock_base_address);
+    println!("base_vaddr: {:#x} ", gpio0.base_vaddr);
+    let pin: (Pin, Pin, Pin, Pin) = (gpio0.pin(49), gpio0.pin(50), gpio0.pin(51), gpio0.pin(52));
+    println!("after new pins, lock reg value: {:?}", gpio0.state());
+    println!(
+        "pin reg value: {:?} {:?} {:?} {:?}",
+        pin.0.state(),
+        pin.1.state(),
+        pin.2.state(),
+        pin.3.state()
+    );
+    pin.0.set_io(true);
+    pin.1.set_io(true);
+    pin.2.set_io(true);
+    pin.3.set_io(true);
+    pin.0.set_level(false);
+    pin.1.set_level(true);
+    pin.2.set_level(false);
+    pin.3.set_level(true);
+    println!(
+        "after set pin reg value: {:?} {:?} {:?} {:?}",
+        pin.0.state(),
+        pin.1.state(),
+        pin.2.state(),
+        pin.3.state()
+    );
+    // loop {
+    //     pin.0.set_level(false);
+    //     pin.1.set_level(false);
+    //     pin.2.set_level(false);
+    //     pin.3.set_level(true);
+    //     thread::sleep(Duration::from_secs(1));
+    //     pin.0.set_level(false);
+    //     pin.1.set_level(false);
+    //     pin.2.set_level(true);
+    //     pin.3.set_level(false);
+    //     thread::sleep(Duration::from_secs(1));
+    //     pin.0.set_level(false);
+    //     pin.1.set_level(true);
+    //     pin.2.set_level(false);
+    //     pin.3.set_level(false);
+    //     thread::sleep(Duration::from_secs(1));
+    //     pin.0.set_level(true);
+    //     pin.1.set_level(false);
+    //     pin.2.set_level(false);
+    //     pin.3.set_level(false);
+    //     thread::sleep(Duration::from_secs(1));
+    //     println!("a loop");
+    // }
 }
 
 fn do_ls(args: &str) {
