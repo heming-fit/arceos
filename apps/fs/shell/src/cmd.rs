@@ -101,29 +101,29 @@ fn do_test_blink(_args: &str) {
         pin.2.state(),
         pin.3.state()
     );
-    // loop {
-    //     pin.0.set_level(false);
-    //     pin.1.set_level(false);
-    //     pin.2.set_level(false);
-    //     pin.3.set_level(true);
-    //     thread::sleep(Duration::from_secs(1));
-    //     pin.0.set_level(false);
-    //     pin.1.set_level(false);
-    //     pin.2.set_level(true);
-    //     pin.3.set_level(false);
-    //     thread::sleep(Duration::from_secs(1));
-    //     pin.0.set_level(false);
-    //     pin.1.set_level(true);
-    //     pin.2.set_level(false);
-    //     pin.3.set_level(false);
-    //     thread::sleep(Duration::from_secs(1));
-    //     pin.0.set_level(true);
-    //     pin.1.set_level(false);
-    //     pin.2.set_level(false);
-    //     pin.3.set_level(false);
-    //     thread::sleep(Duration::from_secs(1));
-    //     println!("a loop");
-    // }
+    println!("start blink");
+    loop {
+        pin.0.set_level(false);
+        pin.1.set_level(false);
+        pin.2.set_level(false);
+        pin.3.set_level(true);
+        thread::sleep(Duration::from_millis(100));
+        pin.0.set_level(false);
+        pin.1.set_level(false);
+        pin.2.set_level(true);
+        pin.3.set_level(false);
+        thread::sleep(Duration::from_millis(100));
+        pin.0.set_level(false);
+        pin.1.set_level(true);
+        pin.2.set_level(false);
+        pin.3.set_level(false);
+        thread::sleep(Duration::from_millis(100));
+        pin.0.set_level(true);
+        pin.1.set_level(false);
+        pin.2.set_level(false);
+        pin.3.set_level(false);
+        thread::sleep(Duration::from_millis(100));
+    }
 }
 
 fn do_ls(args: &str) {
