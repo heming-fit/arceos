@@ -15,6 +15,10 @@ pub mod console {
 
 pub mod hal {
     pub use super::dw_apb_gpio;
+    pub static GPIO0: SpinNoIrq<GPIO> = SpinNoIrq::new(GPIO::new(
+        phys_to_virt(GPIO0_BASE).as_usize(),
+        phys_to_virt(LOCK_BASE).as_usize(),
+    ));
     pub fn pin(index: usize) -> Pin {
         unimplemented!()
     }
