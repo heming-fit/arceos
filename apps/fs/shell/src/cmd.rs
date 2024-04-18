@@ -1,5 +1,6 @@
+use dw_apb_gpio::GPIO;
 use std::fs::{self, File, FileType};
-use std::hal::pin;
+use std::hal::GPIO0;
 use std::io::{self, prelude::*};
 use std::thread;
 use std::time::{Duration, Instant};
@@ -72,7 +73,8 @@ const fn file_perm_to_rwx(mode: u32) -> [u8; 9] {
 
 fn do_test_blink(_args: &str) {
     println!("test blink");
-    let pin = (pin(49), pin(50), pin(51), pin(52));
+    let mut gpio0 = GPIO0.lock();
+    let pin = (gpio0.pin(49), gpio0.pin(50), gpio0.pin(51), gpio0.pin(52));
     loop {
         pin.0.set_level(false);
         pin.1.set_level(false);

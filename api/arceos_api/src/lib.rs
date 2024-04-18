@@ -79,6 +79,7 @@ pub mod stdio {
 }
 
 pub mod hal {
+    pub use axhal::hal::GPIO0;
     use dw_apb_gpio;
     define_api! {
         pub fn pin(index: usize) -> dw_apb_gpio::Pin;

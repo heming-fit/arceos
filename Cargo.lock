@@ -142,6 +142,7 @@ dependencies = [
  "axfs_vfs",
  "axstd",
  "crate_interface",
+ "dw_apb_gpio",
 ]
 
 [[package]]
